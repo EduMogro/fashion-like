@@ -40,6 +40,7 @@ class PostController extends Controller
     {
         $post = new Post();
         $post->image_url = $request->image_url;
+        $post->description = $request->description;
 
         $post->save();
     }
@@ -76,7 +77,7 @@ class PostController extends Controller
     public function update(Request $request, $id)
     {
         $post = Post::findOrFail($request->id);
-        $post->image_url = $request->image_url;
+        $post->description = $request->description;
 
         $post->save();
         return $post;
