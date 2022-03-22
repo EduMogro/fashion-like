@@ -39,3 +39,8 @@ Route::get('/posts', 'App\Http\Controllers\PostController@index');
     Route::put('/posts/{id}', 'App\Http\Controllers\PostController@update');
     Route::delete('/posts/{id}', 'App\Http\Controllers\PostController@destroy');
 // });
+
+// LIKES
+
+Route::post('/posts/{post}/likes', 'App\Http\Controllers\LikesController@store');
+Route::get('/posts/{post}/likes', 'App\Http\Controllers\LikesController@show');
