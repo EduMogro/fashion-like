@@ -39,11 +39,15 @@ class LikesController extends Controller
      */
     public function store(Request $request, $post_id)
     {
-        $like = new Like();
-        $like->user_id = "1";
-        $like->post_id = $post_id;
+        $likes = DB::select('SELECT * FROM likes WHERE (user_id = 1 AND post_id = :post)', ['post' => $post]);
+        if (!count($likes)) {
+            $like = new Like();
+            $like->user_id = "1";
+            $like->post_id = $post_id;
 
-        $like->save();
+            $like->save();
+        }
+        
     }
 
     /**
