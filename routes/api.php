@@ -44,3 +44,6 @@ Route::get('/posts', 'App\Http\Controllers\PostController@index');
 
 Route::post('/posts/{post}/likes', 'App\Http\Controllers\LikesController@store');
 Route::get('/posts/{post}/likes', 'App\Http\Controllers\LikesController@show');
+
+Route::post('/posts/{post}/dislikes', 'App\Http\Controllers\DislikesController@store');
+Route::get('/posts/{post}/dislikes', 'App\Http\Controllers\DislikesController@show');

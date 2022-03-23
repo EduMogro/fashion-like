@@ -5,9 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use App\Models\User;
-use App\Models\Like;
+use App\Models\Dislike;
 
-class LikesController extends Controller
+class DislikesController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,9 +16,9 @@ class LikesController extends Controller
      */
     public function index($post)
     {
-        $likes = DB::select('SELECT * FROM likes WHERE (post_id = :post)', ['post' => $post]);
+        $dislikes = DB::select('SELECT * FROM dislikes WHERE (post_id = :post)', ['post' => $post]);
 
-        return count($likes);
+        return count($dislikes);
     }
 
     /**
@@ -41,25 +41,25 @@ class LikesController extends Controller
     {
         // Obtengo el id del usuario autenticado
         $user_id = 1;
-        // Obtengo los registros de los likes del usuario autenticado
-        $likes = DB::select('SELECT * FROM likes
+        // Obtengo los registros de los dislikes del usuario autenticado
+        $dislikes = DB::select('SELECT * FROM dislikes
                             WHERE (user_id = :user AND post_id = :post)', 
                             ['post' => $post_id, 'user' => $user_id]);
-        // Obtengo la cantidad de registros encontrados (si el usuario hizo like o no)
-        $count = count($likes);
+        // Obtengo la cantidad de registros encontrados (si el usuario hizo dislike o no)
+        $count = count($dislikes);
 
         if ($count) {
-            $likes = DB::select('DELETE FROM likes 
+            $dislikes = DB::select('DELETE FROM dislikes 
                                 WHERE (user_id = :user AND post_id = :post)
                                 LIMIT 1', 
                                 ['post' => $post_id, 'user' => $user_id]);
             $count = 0;
         } else {
-            $like = new Like();
-            $like->user_id = "1";
-            $like->post_id = $post_id;
+            $dislike = new Dislike();
+            $dislike->user_id = "1";
+            $dislike->post_id = $post_id;
 
-            $like->save();
+            $dislike->save();
             $count = 1;
         }
         return $count;
@@ -75,12 +75,12 @@ class LikesController extends Controller
     {
         // Obtengo el id del usuario autenticado
         $user_id = 1;
-        // Obtengo los registros de los likes del usuario autenticado
-        $likes = DB::select('SELECT * FROM likes 
+        // Obtengo los registros de los dislikes del usuario autenticado
+        $dislikes = DB::select('SELECT * FROM dislikes 
                             WHERE (user_id = :user AND post_id = :post)', 
                             ['post' => $post_id, 'user' => $user_id]);
 
-        return count($likes);
+        return count($dislikes);
     }
 
     /**
